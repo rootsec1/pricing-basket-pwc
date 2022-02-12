@@ -1,11 +1,22 @@
 from enum import Enum
 
-class ItemName(Enum):
-    SOUP = "SOUP"
-    BREAD = "BREAD"
-    MILK = "MILK"
-    APPLES = "APPLES"
+
+class ExtendedEnum(Enum):
 
     @classmethod
     def list(cls):
         return list(map(lambda c: c.value, cls))
+
+
+class ItemName(ExtendedEnum):
+    SOUP = "SOUP"
+    BREAD = "BREAD"
+    MILK = "MILK"
+    APPLE = "APPLE"
+
+
+class ItemUnit(ExtendedEnum):
+    TIN = "TIN"
+    LOAF = "LOAF"
+    BOTTLE = "BOTTLE"
+    BAG = "BAG"
