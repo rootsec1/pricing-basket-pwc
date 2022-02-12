@@ -1,10 +1,19 @@
 # Pricing Basket
 
-Give a list of items (shopping cart), the program is modelled to apply any eligible offers to the cart and return the net amount to be paid.
+**Minimum python version required: `3.7`**
 
-Usage: `$ python3 index.py --cart [{Soup,Bread,Milk,Apple} ...]`
+Given a list of items (shopping cart), this command line tool is modelled to apply any eligible offers to the cart and return the net amount to be paid.
 
-Example: `$ python3 index.py --cart soup bread milk apple soup`
+## Usage
+
+Syntax: `$ python3 index.py --cart [{Soup,Bread,Milk,Apple} ...]`
+
+Example: `$ python3 index.py --cart soup bread soup apple bread soup soup apple`
+
+Tests: `$ python3 -m unittest discover`
+
+## Screenshot
+![Screenshot](https://i.imgur.com/vv3Exf5.png)
 
 ## Directory Structure
 

@@ -9,7 +9,7 @@ from core import *
 class TestProcessingLogic(unittest.TestCase):
 
     def test_subtotal_computation_logic(self):
-        print("\nRunning TestProcessingLogic."+self._testMethodName, end=" | ")
+        print("\nRunning TestProcessingLogic."+self._testMethodName)
         sample_space = [ItemName.APPLE, ItemName.MILK, ItemName.BREAD]
         sample_space_counter = Counter(sample_space)
         sample_space_subtotal = compute_subtotal(
@@ -19,7 +19,7 @@ class TestProcessingLogic(unittest.TestCase):
         self.assertAlmostEqual(sample_space_subtotal, 3.1)
 
     def test_discount(self):
-        print("\nRunning TestProcessingLogic."+self._testMethodName, end=" | ")
+        print("\nRunning TestProcessingLogic."+self._testMethodName)
         sample_space = [ItemName.APPLE]
         sample_space_counter = Counter(sample_space)
         sample_space_subtotal = compute_subtotal(
