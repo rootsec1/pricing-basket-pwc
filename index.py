@@ -1,6 +1,4 @@
 # TODO: Unit Tests
-# TODO: Logging
-# TODO: Error handling
 
 import sys
 

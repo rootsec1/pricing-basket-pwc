@@ -1,9 +1,11 @@
+import logging
 from typing import List
 from constants import ItemName, CBOLD, CEND, CWHITE, CRED
 from models import ItemModel
 from logging import Logger
 
-logger = Logger(name="price-basket")
+logger = logging.getLogger(name="price-basket")
+logging.basicConfig()
 
 
 def find_item_model_by_name(name: ItemName, item_list: List[ItemModel]) -> ItemModel:

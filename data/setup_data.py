@@ -3,7 +3,7 @@ import json
 from datetime import datetime
 from typing import List, Tuple
 
-from constants.enums import ItemName, ItemUnit
+from constants import ItemName, ItemUnit
 from models import ItemModel, Offer
 from util import find_item_model_by_name, logger
 
