@@ -20,8 +20,18 @@ def compute_subtotal(cart_counter: Counter, item_dataset: List[ItemModel]) -> fl
         # subtotal for item = cost of item * quantity of same in cart
         subtotal += item.cost * cart_counter.get(cart_item)
     subtotal = round(subtotal, 2)
-    color_output("\nSubtotal: #{}\n".format(subtotal))
+    color_output("Subtotal: #{}".format(subtotal))
     return subtotal
+
+
+def add_discount(master_offer: Offer):
+    discount = round(
+        master_offer.discount_percentage /
+        100 * master_offer.offered_item.cost, 2
+    )
+    discount *= 100  # Convert pounds to pence
+    color_output("{}: -{}p".format(master_offer.name, discount))
+    return discount
 
 
 def apply_offer(
@@ -47,21 +57,24 @@ def apply_offer(
     for item_name_cart in temp_cart_counter:
         item_name_cart_count = temp_cart_counter[item_name_cart]
 
+        # When the pre-requisite item required to be eligible for the offer is
+        # the same as the item on which the offer is applied
+        # Example: Apple should be in cart to avail 10% discount on the same
         if item_name_cart == offered_item.name and len(master_prerequisite_item_name_list) == 1:
-            discount = round(master_offer.discount_percentage/100 * offered_item.cost, 2)
-            discount_for_offer += discount * item_name_cart_count
-            discount *= 100  # Convert pounds to pence
-            color_output("{}: -{}p\n".format(master_offer.name, discount) * item_name_cart_count)
+            for _ in range(item_name_cart_count):
+                discount = add_discount(master_offer)
+                discount_for_offer += discount
             continue
 
+        # When the pre-requisite items required to be eligible for the offer is
+        # different from the item on which the offer is applied
+        # Example: 2 tins of soup are required to apply a 50% discount on a loaf of bread
         for _ in range(item_name_cart_count):
             if len(temp_prerequisite_item_name_list) == 0 and \
                 offered_item.name in temp_cart_counter and \
                     temp_cart_counter[offered_item.name] >= 1:
-                discount = round(master_offer.discount_percentage/100 * offered_item.cost, 2)
+                discount = add_discount(master_offer)
                 discount_for_offer += discount
-                discount *= 100  # Convert pounds to pence
-                color_output("{}: -{}p".format(master_offer.name, discount))
 
                 temp_cart_counter[offered_item.name] -= 1
                 temp_prerequisite_item_name_list = master_prerequisite_item_name_list.copy()
@@ -96,4 +109,4 @@ def process_cart(cart: List[str]):
 
     if total_discount == 0:
         color_output("(no offers available)")
-    color_output("\nTotal: #{}".format(total))
+    color_output("Total: #{}".format(total))

@@ -1,5 +1,5 @@
 from typing import List
-from constants import ItemName, CBOLD, CEND, CWHITE
+from constants import ItemName, CBOLD, CEND, CWHITE, CRED
 from models import ItemModel
 
 
@@ -8,10 +8,10 @@ def find_item_model_by_name(name: ItemName, item_list: List[ItemModel]) -> ItemM
 
 
 def color_output(s: str) -> str:
-    colon_index = s.index(":")
-    if colon_index == -1:
-        print(s)
-    else:
+    try:
+        colon_index = s.index(":")
         pre_colon_string = s[:colon_index+1]
         post_colon_string = s[colon_index+1:]
         print(pre_colon_string + CWHITE + CBOLD + post_colon_string + CEND)
+    except ValueError: # For strings that do not contain ":"
+        print(CRED + s + CEND)
