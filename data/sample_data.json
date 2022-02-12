@@ -28,7 +28,7 @@
             "valid_from_timestamp": "2022-02-12 13:09:31.055778",
             "valid_to_timestamp": "2022-02-19 13:09:31.055778",
             "name": "Apples have 10% off their normal price this week",
-            "prerequisite_items": []
+            "prerequisite_items": ["APPLE"]
         },
         {
             "offered_item": "BREAD",

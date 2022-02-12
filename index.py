@@ -4,6 +4,7 @@
 # TODO: Comments for code
 # TODO: DS/Algo
 # TODO: Directory and code structure
+# TODO: Error handling
 
 import sys
 

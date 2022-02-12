@@ -18,5 +18,4 @@ def parse_command_line_arguments():
         required=True
     )
     cart = arg_parser.parse_args().cart
-    response = process_cart(cart=cart)
-    print(response)
+    process_cart(cart=cart)
