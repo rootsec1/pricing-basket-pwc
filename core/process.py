@@ -32,8 +32,7 @@ def add_discount(master_offer: Offer):
         master_offer.discount_percentage /
         100 * master_offer.offered_item.cost, 2
     )
-    discount *= 100  # Convert pounds to pence
-    color_output("{}: -{}p".format(master_offer.name, discount))
+    color_output("{}: -{}p".format(master_offer.name, discount*100))
     return discount
 
 
