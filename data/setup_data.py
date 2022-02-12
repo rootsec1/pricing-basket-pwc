@@ -5,10 +5,12 @@ from typing import List, Tuple
 
 from constants.enums import ItemName, ItemUnit
 from models import ItemModel, Offer
-from util import find_item_model_by_name
+from util import find_item_model_by_name, logger
 
-
-sample_data = json.load(open("./data/sample_data.json"))
+try:
+    sample_data = json.load(open("./data/sample_data.json"))
+except Exception as ex:
+    logger.exception(ex)
 
 
 def mock_items() -> List[ItemModel]:

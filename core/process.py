@@ -5,7 +5,7 @@ from datetime import datetime
 from models import ItemModel, Offer
 from data import mock_data
 from constants import ItemName
-from util import find_item_model_by_name, color_output
+from util import find_item_model_by_name, color_output, logger
 
 # Mocking the data, list of items and list of offers come from a sample JSON
 # In the real world, this layer could be modified to query a database or an API
@@ -111,15 +111,21 @@ def apply_eligible_offers(
 
 
 def process_cart(cart: List[str]) -> None:
-    cart: List[ItemName] = list(map(lambda x: ItemName(x), cart))
-    # Dictionary of item names and their respective quantity in cart
-    # Example: {'SOUP': 3, 'BREAD': 1, 'APPLE': 1}
-    cart_counter: Counter = Counter(cart)
+    try:
+        cart: List[ItemName] = list(map(lambda x: ItemName(x), cart))
+        # Dictionary of item names and their respective quantity in cart
+        # Example: {'SOUP': 3, 'BREAD': 1, 'APPLE': 1}
+        cart_counter: Counter = Counter(cart)
 
-    subtotal: float = compute_subtotal(cart_counter, item_dataset)
-    total_discount: float = apply_eligible_offers(cart_counter, offer_dataset)
-    total: float = round(subtotal - total_discount, 2)
+        subtotal: float = compute_subtotal(cart_counter, item_dataset)
+        total_discount: float = apply_eligible_offers(
+            cart_counter,
+            offer_dataset
+        )
+        total: float = round(subtotal - total_discount, 2)
 
-    if total_discount == 0:  # No offers were eligible for the cart
-        color_output("(no offers available)")
-    color_output("Total: #{}".format(total))
+        if total_discount == 0:  # No offers were eligible for the cart
+            color_output("(no offers available)")
+        color_output("Total: #{}".format(total))
+    except Exception as ex:
+        logger.exception("Processing logic exception: "+str(ex))
