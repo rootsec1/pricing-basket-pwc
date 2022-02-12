@@ -6,13 +6,13 @@ from constants.enums import ItemName, ItemUnit
 
 @dataclass
 class ItemModel:
-    id: UUID = field(init=False)  # Auto-generated field
-    name: ItemName
+    id: UUID = field(init=False)  # Unique identifier
+    name: ItemName  # Enum of valid item names
     cost: float  # In pounds
-    unit: ItemUnit
+    unit: ItemUnit  # Enum of valid units for the item
 
     def __post_init__(self):
-        self.id = uuid4()
+        self.id = uuid4()  # Auto-generated field
 
     def __str__(self) -> str:
         return "{}: {} - {} pounds per {}".format(

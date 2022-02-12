@@ -1,9 +1,6 @@
 # TODO: Type Hinting
 # TODO: Unit Tests
 # TODO: Logging
-# TODO: Comments for code
-# TODO: DS/Algo
-# TODO: Directory and code structure
 # TODO: Error handling
 
 import sys

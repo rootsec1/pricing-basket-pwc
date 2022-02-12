@@ -45,6 +45,8 @@ def mock_offers(item_list: List[ItemModel]) -> List[Offer]:
             name=ItemName(offered_item),
             item_list=item_list
         )
+
+        # Items that should be present in the cart to avail the offer
         prerequisite_items = list(
             map(
                 lambda x: find_item_model_by_name(
@@ -54,6 +56,7 @@ def mock_offers(item_list: List[ItemModel]) -> List[Offer]:
                 prerequisite_items
             )
         )
+        # Duration of validity
         valid_from_timestamp = datetime.fromisoformat(valid_from_timestamp)
         valid_to_timestamp = datetime.fromisoformat(valid_to_timestamp)
         offer = Offer(
@@ -69,6 +72,7 @@ def mock_offers(item_list: List[ItemModel]) -> List[Offer]:
 
 
 def mock_data() -> Tuple[List[ItemModel], List[Offer]]:
+    # Mocking a data source
     fake_items = mock_items()
     fake_offers = mock_offers(item_list=fake_items)
     return fake_items, fake_offers

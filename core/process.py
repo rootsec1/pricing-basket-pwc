@@ -7,10 +7,13 @@ from data import mock_data
 from constants import ItemName
 from util import find_item_model_by_name, color_output
 
+# Mocking the data, list of items and list of offers come from a sample JSON
+# In the real world, this layer could be modified to query a database or an API
 item_dataset, offer_dataset = mock_data()
 
 
 def compute_subtotal(cart_counter: Counter, item_dataset: List[ItemModel]) -> float:
+    # Compute total before discounts
     subtotal = 0
     for cart_item in cart_counter:
         item: ItemModel = find_item_model_by_name(
@@ -38,17 +41,20 @@ def apply_offer(
     master_cart_counter: Counter,
     master_offer: Offer,
 ) -> float:
+    # Check if cart is eligible for individual offer
     offered_item: ItemModel = master_offer.offered_item
     if offered_item.name not in master_cart_counter:
         # No discount since the item is not present
         return 0
 
-    master_prerequisite_item_list = master_offer.prerequisite_items
+    # List of item names that should be in cart to be eligible for this offer
     master_prerequisite_item_name_list = list(map(
         lambda x: x.name,
-        master_prerequisite_item_list
+        master_offer.prerequisite_items
     ))
 
+    # Temporary variables that get reset each time an offer is applied
+    # Will come into play when the same offer can be applied multiple times
     temp_cart_counter = master_cart_counter.copy()
     temp_prerequisite_item_name_list = master_prerequisite_item_name_list.copy()
 
@@ -77,36 +83,43 @@ def apply_offer(
                 discount_for_offer += discount
 
                 temp_cart_counter[offered_item.name] -= 1
+                # Reset temporary variable after applying the offer
                 temp_prerequisite_item_name_list = master_prerequisite_item_name_list.copy()
 
             if item_name_cart in temp_prerequisite_item_name_list:
+                # Ensuring that quantity of pre requisite items required are present in cart
+                # Example: 2 tins of soup are required to apply a 50% discount on a loaf of bread
                 temp_prerequisite_item_name_list.remove(item_name_cart)
                 temp_cart_counter[item_name_cart] -= 1
 
     return discount_for_offer
 
 
+# Check for all eligible offers
 def apply_eligible_offers(
     cart_counter: Counter,
     offer_dataset: List[Offer]
 ) -> float:
-    # Return discount amount
+    # Return total discount amount for all applied offers
     total_discount = 0
     for offer in offer_dataset:
         if offer.valid_from_timestamp <= datetime.now() <= offer.valid_to_timestamp:
+            # Ensuring that the offer is still valid
             discount_for_offer = apply_offer(cart_counter, offer)
             total_discount += discount_for_offer
     return total_discount
 
 
-def process_cart(cart: List[str]):
-    cart = list(map(lambda x: ItemName(x), cart))
-    cart_counter = Counter(cart)  # Dictionary of
+def process_cart(cart: List[str]) -> None:
+    cart: List[ItemName] = list(map(lambda x: ItemName(x), cart))
+    # Dictionary of item names and their respective quantity in cart
+    # Example: {'SOUP': 3, 'BREAD': 1, 'APPLE': 1}
+    cart_counter: Counter = Counter(cart)
 
-    subtotal = compute_subtotal(cart_counter, item_dataset)
-    total_discount = apply_eligible_offers(cart_counter, offer_dataset)
-    total = round(subtotal - total_discount, 2)
+    subtotal: float = compute_subtotal(cart_counter, item_dataset)
+    total_discount: float = apply_eligible_offers(cart_counter, offer_dataset)
+    total: float = round(subtotal - total_discount, 2)
 
-    if total_discount == 0:
+    if total_discount == 0:  # No offers were eligible for the cart
         color_output("(no offers available)")
     color_output("Total: #{}".format(total))
