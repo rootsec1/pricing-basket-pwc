@@ -1,10 +1,10 @@
 from typing import List
 from collections import Counter
 
-from src.models import ItemModel
-from src.data import mock_data
-from src.constants import ItemName
-from src.util import find_item_model_by_name
+from models import ItemModel
+from data import mock_data
+from constants import ItemName
+from util import find_item_model_by_name
 
 item_dataset, offer_dataset = mock_data()
 

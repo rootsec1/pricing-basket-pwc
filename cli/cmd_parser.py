@@ -1,8 +1,8 @@
 import argparse
 
-from src.core import process_cart
+from core import process_cart
 
-from src.constants import ARG_PARSER_DESCRIPTION, ItemName
+from constants import ARG_PARSER_DESCRIPTION, ItemName
 
 
 def parse_command_line_arguments():

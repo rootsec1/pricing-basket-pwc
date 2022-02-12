@@ -7,7 +7,7 @@
 
 import sys
 
-from src.cli.cmd_parser import parse_command_line_arguments
+from cli.cmd_parser import parse_command_line_arguments
 
 if sys.version_info[0] < 3:
     # To ensure that the program is executed using python 3

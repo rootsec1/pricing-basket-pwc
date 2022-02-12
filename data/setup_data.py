@@ -3,12 +3,12 @@ import json
 from datetime import datetime
 from typing import List, Tuple
 
-from src.constants.enums import ItemName, ItemUnit
-from src.models import ItemModel, Offer
-from src.util import find_item_model_by_name
+from constants.enums import ItemName, ItemUnit
+from models import ItemModel, Offer
+from util import find_item_model_by_name
 
 
-sample_data = json.load(open("./src/data/sample_data.json"))
+sample_data = json.load(open("./data/sample_data.json"))
 
 
 def mock_items() -> List[ItemModel]:

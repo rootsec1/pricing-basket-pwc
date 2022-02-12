@@ -1,7 +1,7 @@
 from uuid import UUID, uuid4
 from dataclasses import dataclass, field
 
-from src.constants.enums import ItemName, ItemUnit
+from constants.enums import ItemName, ItemUnit
 
 
 @dataclass
